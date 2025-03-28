@@ -28,9 +28,6 @@ tk.Button(start_page, text="Go to Test Creator", command=lambda: show_frame(page
 
 # Page One (Standards Creator)
 tk.Label(page_one, text="Standards Page", font=('Arial', 40, 'bold'), relief="raised").pack(pady=20)
-# tk.Label(page_one, text="Placeholder text:").grid(row=1, column=0, padx=5, pady=5)
-# entry = tk.Entry(page_one, width=30)
-# entry.grid(row=1, column=1, padx=5, pady=5)
 tk.Button(page_one, text="Back to Home Page", command=lambda: show_frame(start_page)).pack(pady=10)
 
 # Page Two (Test Creator)
