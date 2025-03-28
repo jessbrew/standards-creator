@@ -1,107 +1,103 @@
 import random
 
-def doRandom(t, v):
-    match t:
+def doRandom(type, values):
+    """
+    Selects a random value based on the given type.
+    Parameters:
+        t (str): The type of problem ("Range" or "Choice").
+        v (list or tuple): The values associated with the type.
+            - If "Range": A tuple or list with min and max values.
+            - If "Choice": A list of possible equations.
+    Returns:
+        int or str: A random integer (for "Range") or a random equation (for "Choice").
+    """
+    match type:
         case 'Choice':
-            return randomChoice(v)
+            return randomChoice(values)
         case 'Range':
-            return randomRange(v)
-        
-def randomChoice(v):
-    return random.choice(v)
-    
-def randomRange(v):
-    return random.randint(v[0], v[1])    
+            return randomRange(values)
 
-def handle_escapes(s):
-    new_s = ''
-    for c in s:
+def randomChoice(values):
+    """
+    Selects a random equation from a list of equations.
+    Parameters:
+        v (list): A list of possible equations.
+    Returns:
+        str: A randomly selected equation from the list.
+    """
+    return random.choice(values)
+
+def randomRange(values):
+    """
+    Generates a random value between two integers.
+    Parameters:
+        v (tuple or list): A pair of integers representing the min and max values.
+    Returns:
+        int: A random integer between the min and max values (inclusive).
+    """
+    return random.randint(int(values[0]), int(values[1]))    
+
+def handle_escapes(text):
+    """
+    Ignores escape cases in a given string.
+    Parameters:
+        s (str): The string with escape cases to be ignored.
+    Returns:
+        new_string (str): A new string without escape cases.
+    """
+    new_string = ''
+    for c in text:
         if c == '\f':
-            new_s += '\\f'
+            new_string += '\\f'
         elif c == '\\':
-            new_s += '\\'
+            new_string += '\\'
         elif c == '\'':
-            new_s += '\\\''
+            new_string += '\\\''
         elif c == '\n':
-            new_s += '\\n'
+            new_string += '\\n'
         elif c == '\r':
-            new_s += '\\r'
+            new_string += '\\r'
         elif c == '\t':
-            new_s += '\\t'
+            new_string += '\\t'
         elif c == '\b':
-            new_s += '\\b'
+            new_string += '\\b'
         else:
-            new_s += c
+            new_string += c
 
-    return new_s
+    return new_string
 
-def parse(test):
-    type = test.split()[0]
-    test = handle_escapes(test)
+
+def parse(input):
+    """
+    Parses a string to return the variable type, possible outcomes, and a desired random value.
+    Parameters:
+        s (str): The initial string to be parsed.
+                 Should be structured like "Range min max" or "Choice $equation1$ $equation2$".
+    Returns:
+        tuple: (type, phrases, random_value)
+    """
+    type = input.split()[0]
+    input = handle_escapes(input)
     match(type):
         case "Choice":
-            args = test.split("$")
+            args = input.split("$")
             args.remove(args[0])
-            phrases = []
-            for phrase in args:
-                newPhrase = '$'+ phrase + '$'
-                if phrase != ' ' and phrase != '':
-                    phrases.append(newPhrase)
-            return(type, phrases, doRandom(type, phrases))
+            print(args)
+            if args == []:
+                raise ValueError(f'Did not include $ with equations')
+            equations = []
+            for equation in args:
+                new_equation = '$'+ equation + '$'
+                if equation != ' ' and equation != '':
+                    equations.append(new_equation)
+            return(type, equations, doRandom(type, equations))
 
         case "Range":
-            args = test.split()
+            args = input.split()
             args.remove(args[0])
-            phrases = []
-            for phrase in args:
-                newPhrase = int(phrase)
-                phrases.append(newPhrase)
-            return(type, phrases, doRandom(type, phrases))
-
-
-if __name__ == "__main__":
-    tests = ["Choice $x^2 + y^2 = z^2$ $x^3 + y^3 = z^3$ $x^4 + y^4 = z^4$",  
-                "Range 5 50",  
-                "Choice $3+4$ $5+6$ $7+8$",  
-                "Choice $\frac{5\pi}{4}$ $\frac{11\pi}{6}$",  
-
-                "Choice $m^2 - n^2 = p^2$ $2mn = q^2$ $m^2 + n^2 = r^2$",  
-                "Range 10 100",  
-                "Choice $4+5$ $6+7$ $8+9$",  
-                "Choice $\frac{2\pi}{3}$ $\frac{5\pi}{6}$",  
-
-                "Choice $\sqrt{a} + \sqrt{b} = \sqrt{c}$ $\sqrt{x} - \sqrt{y} = \sqrt{z}$",  
-                "Range 2 30",  
-                "Choice $9+10$ $11+12$",  
-                "Choice $\frac{3\pi}{4}$ $\frac{7\pi}{8}$"  
-                "Choice $p^3 + q^3 = r^3$ $s^4 + t^4 = u^4$ $v^5 + w^5 = x^5$",  
-                "Range 10 200",  
-                "Choice $12+13$ $14+15$ $16+17$",  
-                "Choice $\frac{11\pi}{8}$ $\frac{13\pi}{9}$",  
-
-                "Choice $a^4 - b^4 = c^4$ $d^5 - e^5 = f^5$ $g^6 - h^6 = i^6$",  
-                "Range 1 50",  
-                "Choice $18+19$ $20+21$ $22+23$",  
-                "Choice $\frac{4\pi}{7}$ $\frac{5\pi}{9}$",  
-
-                "Choice $\log_a b + \log_a c = \log_a d$ $\log_x y - \log_x z = \log_x w$",  
-                "Range 5 100",  
-                "Choice $24+25$ $26+27$",  
-                "Choice $\frac{9\pi}{10}$ $\frac{11\pi}{12}$",  
-
-                "Choice $\sin A + \cos B = \tan C$ $\sec D - \csc E = \cot F$",  
-                "Range 2 40",  
-                "Choice $28+29$ $30+31$",  
-                "Choice $\frac{6\pi}{5}$ $\frac{8\pi}{7}$",  
-
-                "Choice $\frac{1}{a} + \frac{1}{b} = \frac{1}{c}$ $\frac{1}{x} - \frac{1}{y} = \frac{1}{z}$",  
-                "Range 3 75",  
-                "Choice $32+33$ $34+35$",  
-                "Choice $\frac{13\pi}{14}$ $\frac{15\pi}{16}$"  
-            ]
-
-    for test in tests:
-        type, phrases, rand = parse(test)
-        print("Type:", type)
-        print("Args:", phrases)
-        print("Random: ", doRandom(type, phrases), '\n')
+            args = [int(x) for x in args]
+            return(type, args, doRandom(type, args))
+        
+        case _:
+            raise ValueError(f'Unaccepted Type: {type} (Expected Values: \'Choice\' and \'Range\')')
+            

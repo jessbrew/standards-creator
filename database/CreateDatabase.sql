@@ -43,12 +43,28 @@ CREATE TABLE Formula (
     content TEXT
 );
 
+CREATE TABLE Question (
+    questionID INTEGER PRIMARY KEY,
+    content TEXT,
+    standardID INTEGER,
+    FOREIGN KEY(standardID) REFERENCES Standard(standardID)
+);
+
 CREATE TABLE Variable (
     variableID INTEGER PRIMARY KEY,
     problemID INTEGER,
+    questionID INTEGER,
     name TEXT,
     details TEXT,
-    FOREIGN KEY (problemID) REFERENCES Problem(problemID)
+    FOREIGN KEY (problemID) REFERENCES Problem(problemID),
+    FOREIGN KEY (questionID) REFERENCES Question(questionID)
+);
+
+CREATE TABLE Part(
+    partID INTEGER PRIMARY KEY,
+    content TEXT,
+    questionID INTEGER,
+    FOREIGN KEY (questionID) REFERENCES Question(questionID)
 );
 
 CREATE TABLE Shape (
