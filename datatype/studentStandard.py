@@ -16,3 +16,6 @@ class StudentStandard(base):
         self.studentID = studentID
         self.standardID = standardID
         self.grade = grade
+
+    def __repr__(self):
+        return f'<StudentStandard (studentStandardID="{self.studentStandardID}", studentID="{self.studentID}", standardID="{self.standardID}", grade="{self.grade}")>'

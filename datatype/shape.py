@@ -14,3 +14,6 @@ class Shape(base):
         self.shapeID = shapeID
         self.type = type
         self.SVG = SVG
+
+    def __repr__(self):
+        return f'<Shape (shapeID="{self.shapeID}", type="{self.type}", SVG="{self.SVG}")>'

@@ -16,3 +16,6 @@ class Student(base):
         self.fName = fName
         self.lName = lName
         self.courseID = courseID
+
+    def __repr__(self):
+        return f'<Student (studentID="{self.studentID}", fName="{self.fName}", lName="{self.lName}", courseID="{self.courseID}")>'

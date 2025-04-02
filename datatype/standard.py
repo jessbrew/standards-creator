@@ -17,3 +17,6 @@ class Standard(base):
         self.standardID = standardID
         self.courseID = courseID
 
+    def __repr__(self):
+        return f'<Standard (standardID="{self.standardID}", name="{self.name}", number="{self.number}", courseID="{self.courseID}")>'
+
