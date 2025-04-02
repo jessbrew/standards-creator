@@ -1,4 +1,16 @@
-class StudentStandard:
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import declarative_base
+
+base = declarative_base()
+
+class StudentStandard(base):
+    __table_name__ = "StudentStandard"
+
+    studentStandardID = Column(Integer, primary_key=True, autoincrement=True)
+    studentID = Column(Integer)
+    standardID = Column(Integer)
+    grade = Column(String)
+
     def __init__(self, studentStandardID, studentID, standardID, grade):
         self.studentStandardID = studentStandardID
         self.studentID = studentID
