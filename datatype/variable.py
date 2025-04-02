@@ -17,3 +17,6 @@ class Variable(base):
         self.questionID = questionID
         self.name = name
         self.details = details
+
+    def __repr__(self):
+        return f'<variableID (id="{self.variableID}", questionID="{self.questionID}", name="{self.name}", details="{self.details}")>'
