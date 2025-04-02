@@ -4,7 +4,7 @@ from sqlalchemy.orm import declarative_base
 base = declarative_base()
 
 class Question(base):
-    __table_name__ = "Question"
+    __tablename__ = "Question"
 
     questionID = Column(Integer, primary_key=True, autoincrement=True)
     standardID = Column(Integer)

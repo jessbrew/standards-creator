@@ -4,7 +4,7 @@ from sqlalchemy.orm import declarative_base
 base = declarative_base()
 
 class Course(base):
-    __table_name__ = "Course"
+    __tablename__ = "Course"
 
     courseID = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)

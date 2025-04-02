@@ -4,7 +4,7 @@ from sqlalchemy.orm import declarative_base
 base = declarative_base()
 
 class Formula(base):
-    __table_name__ = "Formula"
+    __tablename__ = "Formula"
 
     formulaID = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)

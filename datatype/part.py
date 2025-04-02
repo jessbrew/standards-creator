@@ -4,7 +4,7 @@ from sqlalchemy.orm import declarative_base
 base = declarative_base()
 
 class Part(base):
-    __table_name__ = "Part"
+    __tablename__ = "Part"
 
     partID = Column(Integer, primary_key=True, autoincrement=True)
     questionID = Column(Integer)

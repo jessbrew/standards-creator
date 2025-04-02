@@ -4,7 +4,7 @@ from sqlalchemy.orm import declarative_base
 base = declarative_base()
 
 class StudentStandard(base):
-    __table_name__ = "StudentStandard"
+    __tablename__ = "StudentStandard"
 
     studentStandardID = Column(Integer, primary_key=True, autoincrement=True)
     studentID = Column(Integer)

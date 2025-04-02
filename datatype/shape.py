@@ -4,7 +4,7 @@ from sqlalchemy.orm import declarative_base
 base = declarative_base()
 
 class Shape(base):
-    __table_name__ = "Shape"
+    __tablename__ = "Shape"
 
     shapeID = Column(Integer, primary_key=True, autoincrement=True)
     type = Column(String)   
