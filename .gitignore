@@ -172,3 +172,10 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Apple stuff
+.DS_Store
+
+# Sheets API stuff
+credentials.json
+sheets_token.json
