@@ -57,13 +57,13 @@ class Database:
 
 if __name__ == "__main__":
     # Create a database connection
-    db = Database("sqlite:///standards_creator.db")
-
+    db = Database("sqlite:///../database/standards_creator.db")
     db.connect()
     db.connection_check()
 
     # Fetch and print some sample data
-    print("Standards:", db.get_all_standards())
+    standards = db.get_all_standards()
+    print("Standards:", standards)
     # print("Questions:", db.get_all_questions())
     # print("Parts:", db.get_all_parts())
 
