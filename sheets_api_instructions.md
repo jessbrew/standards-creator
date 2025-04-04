@@ -19,6 +19,14 @@
 2. Follow these instructions to get Google Cloud & everything set up: [Python Sheets Quickstart](https://developers.google.com/workspace/sheets/api/quickstart/python)
     - You don't have to run their actual quickstart program, but do every other step since the setup for this program is the same
 
+# Example
+```python
+student_standards = get_student_standards("1EmozOHR-QQGPJ6bn7PnuTBzbWDqNUDW_KA9hFfXAwcE")
+
+for student, standards in student_standards.items():
+  print(f"Name:\t\t{student}")
+  print(f"Standards:\t{standards}\n")
+```
 
 ## Troubleshooting
 

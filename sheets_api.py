@@ -50,6 +50,3 @@ def get_student_standards(spreadsheet_id):
   except HttpError as err:
     print(err)
 
-
-
-student_standards = get_student_standards("1EmozOHR-QQGPJ6bn7PnuTBzbWDqNUDW_KA9hFfXAwcE")
