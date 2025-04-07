@@ -8,15 +8,15 @@ class Standard(base):
 
     standardID = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
-    number = Column(Integer)
+    standardNumber = Column(Integer)
     courseID = Column(Integer)
 
     def __init__(self, standardID, name, number, courseID):
         self.name = name
-        self.number = number
+        self.standardNumber = number
         self.standardID = standardID
         self.courseID = courseID
 
     def __repr__(self):
-        return f'<Standard (standardID="{self.standardID}", name="{self.name}", number="{self.number}", courseID="{self.courseID}")>'
+        return f'<Standard (standardID="{self.standardID}", name="{self.name}", standardNumber="{self.standardNumber}", courseID="{self.courseID}")>'
 
