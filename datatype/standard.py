@@ -19,4 +19,3 @@ class Standard(base):
 
     def __repr__(self):
         return f'<Standard (standardID="{self.standardID}", name="{self.name}", standardNumber="{self.standardNumber}", courseID="{self.courseID}")>'
-
