@@ -41,10 +41,21 @@ def get_student_standards(spreadsheet_id):
     if not values:
       print("No data found")
       return
-    # put answers into dictionary, return that
+    
+    # put answers into dictionary
     answers = {}
     for row in values:
-      answers.update({row[1]: row[2]}) # name : standards
+      # splits list of standards at ", "
+      standards = row[2].split(", ")
+      # make standards into array of INTS
+      int_standards = []
+      for standard in standards:
+        int_standards.append(int(standard))
+
+      # add name + standards to dictionary
+      answers.update({row[1]: int_standards}) # name : standards
+    
+    # return dictionary
     return answers
 
   except HttpError as err:
