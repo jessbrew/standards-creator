@@ -10,7 +10,7 @@
     - \> `source venv/bin/activate` *[run in terminal]*
     - Should say *(venv)* before terminal entries now if it worked
 
-## Steps
+# Steps
 1. Make a Google form, and have the responses save to Google sheets
     - You need the ID if this sheet later, which is this part of the url:
         - ***docs.google.com/spreadsheets/d/***`1EmozOHR-QQGPJ6bn7PnuTBzbWDqNUDW_KA9hFfXAwcE`***/edit?resourcekey=&gid=952402027#gid=952402027***
@@ -19,13 +19,21 @@
 2. Follow these instructions to get Google Cloud & everything set up: [Python Sheets Quickstart](https://developers.google.com/workspace/sheets/api/quickstart/python)
     - You don't have to run their actual quickstart program, but do every other step since the setup for this program is the same
 
+3. Run the `test_maker_interface.py` file
+
 # Example
+[Example Form](https://docs.google.com/forms/d/e/1FAIpQLSd3cn5URTaTVjfcwmNPv-vDJNApgGQ7Zyb-XFFJhgGB7nOPRg/viewform?usp=header)
+
+[Example Sheet (of form responses)](https://docs.google.com/spreadsheets/d/1EmozOHR-QQGPJ6bn7PnuTBzbWDqNUDW_KA9hFfXAwcE/edit?usp=sharing)
 ```python
-student_standards = get_student_standards("1EmozOHR-QQGPJ6bn7PnuTBzbWDqNUDW_KA9hFfXAwcE")
+student_standards = get_all_student_standards("1EmozOHR-QQGPJ6bn7PnuTBzbWDqNUDW_KA9hFfXAwcE")
+
+add_student_standards(student_standards, "ADDITIONAL STUDENT", [1, 2, 10])
+add_student_standards(student_standards, "ADDITIONAL STUDENT 2", 1)
 
 for student, standards in student_standards.items():
-  print(f"Name:\t\t{student}")
-  print(f"Standards:\t{standards}\n")
+    print(f"Name:\t\t{student}")
+    print(f"Standards:\t{standards}\n")
 ```
 
 ## Troubleshooting
