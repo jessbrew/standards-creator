@@ -1,21 +1,28 @@
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import declarative_base
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import declarative_base, relationship
 
-base = declarative_base()
+Base = declarative_base()
 
-class Standard(base):
-    __tablename__ = "Standard"
+class Standard(Base):
+    __tablename__ = "standards"
 
     standardID = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String)
-    standardNumber = Column(Integer)
-    courseID = Column(Integer)
+    name = Column(String, nullable=False)
+    standardNumber = Column(Integer, nullable=False)
+    courseID = Column(Integer, nullable=False)
 
-    def __init__(self, standardID, name, number, courseID):
-        self.name = name
+    # Proper relationship declaration
+    questions = relationship("Question", back_populates="standard", cascade="all, delete-orphan")
+
+    def __init__(self, name, number, courseID):
         self.standardNumber = number
-        self.standardID = standardID
+        self.name = name
         self.courseID = courseID
 
     def __repr__(self):
-        return f'<Standard (standardID="{self.standardID}", name="{self.name}", standardNumber="{self.standardNumber}", courseID="{self.courseID}")>'
+        return (
+            f'<Standard(standardID="{self.standardID}", '
+            f'name="{self.name}", '
+            f'standardNumber="{self.standardNumber}", '
+            f'courseID="{self.courseID}")>'
+        )

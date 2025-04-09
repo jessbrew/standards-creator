@@ -54,3 +54,31 @@ class Database:
         parts = session.query(Part).all()
         session.close()
         return parts
+
+if __name__ == "__main__":
+    # Create a database connection
+    db = Database("sqlite:///../database/standards_creator.db")
+    db.connect()
+    db.connection_check()
+
+    # Fetch and print some sample data
+    # For Standards
+    # standards = db.get_all_standards()
+    # print("Standards:")
+    # for standard in standards:
+    #     print(standard.name)
+    #
+    # # For Questions
+    # questions = db.get_all_questions()
+    # print("Questions:")
+    # for question in questions:
+    #     print(question.content)
+    #
+    # # For Parts
+    # parts = db.get_all_parts()
+    # print("Parts:")
+    # for part in parts:
+    #     print(part.content)
+
+
+    db.disconnect()
