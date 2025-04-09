@@ -22,6 +22,7 @@ var/
 wheels/
 share/python-wheels/
 *.egg-info/
+myenv/
 .installed.cfg
 *.egg
 MANIFEST
@@ -179,3 +180,5 @@ cython_debug/
 # Sheets API stuff
 credentials.json
 sheets_token.json
+
+database/standards_creator.db
