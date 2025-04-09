@@ -3,4 +3,3 @@ class Standard:
         self.name = name
         self.number = number
         self.standardID = standardID
-
