@@ -1,11 +1,34 @@
 import tkinter as tk
 from tkinter import ttk
-from standard import Standard
-import standardsInterface
+from datatype.standard import Standard
+# import standardsInterface
 from collections import defaultdict
+import test_maker_interface
+
+SPREADSHEET_ID = "1EmozOHR-QQGPJ6bn7PnuTBzbWDqNUDW_KA9hFfXAwcE"
 
 def show_frame(frame):
     frame.tkraise()
+
+def pull_from_google(parent, spreadsheet_id):
+    grid_frame = tk.Frame(parent, padx=20, pady=20)
+    grid_frame.pack()
+
+    student_standards = test_maker_interface.get_all_student_standards(spreadsheet_id)
+    for row_num, (student, standards) in enumerate(student_standards.items()):
+        tk.Label( # student
+            grid_frame,
+            text=student,
+            width=10,
+            height=2
+        ).grid(row=row_num, column=0)
+        tk.Label( # standards
+            grid_frame,
+            text=standards,
+            width=10,
+            height=2
+        ).grid(row=row_num, column=1)
+
 
 root = tk.Tk()
 root.geometry("800x600")
@@ -50,12 +73,14 @@ tree.column("#0", width=200)  # Main column
 tree.heading("#0", text="All Standards", anchor="w")
 
 # ------------ Page 1 ------------
-tk.Label(page1, text="Generate Test Page", font=('Arial', 40, 'bold')).pack(pady=20)
-tk.Button(page1, text="+ Back to Main Page", command=lambda: show_frame(mainPage), font=('Arial', 30, 'bold')).pack(pady=10)
+tk.Label(page1, text="New Standards Creation",font=('Arial', 40, 'bold')).pack(pady=20)
+tk.Button(page1, text="+ Back to Main Page", command=lambda: show_frame(mainPage),font=('Arial', 30, 'bold')).pack(pady=10)
 
 # ------------ Page 2 ------------
-tk.Label(page2, text="New Standards Creation",font=('Arial', 40, 'bold')).pack(pady=20)
-tk.Button(page2, text="+ Back to Main Page", command=lambda: show_frame(mainPage),font=('Arial', 30, 'bold')).pack(pady=10)
+tk.Label(page2, text="Generate Test Page", font=('Arial', 40, 'bold')).pack(pady=20)
+tk.Button(page2, text="+ Back to Main Page", command=lambda: show_frame(mainPage), font=('Arial', 30, 'bold')).pack(pady=10)
+tk.Button(page2, text="Pull Students from Google", command=lambda: pull_from_google(page2, SPREADSHEET_ID), font=('Arial', 24)).pack(pady=20)
+
 
 # Set starting page
 show_frame(mainPage)

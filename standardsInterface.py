@@ -1,4 +1,4 @@
-from standard import Standard
+from datatype.standard import Standard
 from collections import defaultdict
 
 standards = []
