@@ -62,6 +62,54 @@ class Database:
             for part in question.parts:
                 questionParts.append(part.content)
         return(standard, standardQuestions, questionParts)
+    
+    def create_whole_standard(self, standard, questions, parts, variables):
+        session = self.Session()
+        self.add_standard(standard)
+        session.flush()
+        for question in questions:
+            self.add_question(question)
+        for part in parts:
+            self.add_part(part)
+        for variable in variables:
+            self.add_variable(variable)
+
+
+    def add_standard(self, standard):
+        session = self.Session()
+        session.add(standard)
+        session.commit()
+
+        session.refresh(standard)
+
+        return standard
+    
+    def add_question(self, question):
+        session = self.Session()
+        session.add(question)
+        session.commit()
+
+        session.refresh(question)
+
+        return question
+    
+    def add_part(self, part):
+        session = self.Session()
+        session.add(part)
+        session.commit()
+
+        session.refresh(part)
+
+        return part
+    
+    def add_variable(self, variable):
+        session = self.Session()
+        session.add(variable)
+        session.commit()
+
+        session.refresh(variable)
+
+        return variable
 
 
 
