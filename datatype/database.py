@@ -60,7 +60,7 @@ class Database:
         for question in standard.questions:
             standardQuestions.append(question)
             for part in question.parts:
-                questionParts.append(part.content)
+                questionParts.append((part.questionID, part.content))
         return(standard, standardQuestions, questionParts)
     
     def create_whole_standard(self, standard, questions, parts, variables):
