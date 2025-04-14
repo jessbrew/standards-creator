@@ -56,6 +56,8 @@ for student, standards in student_standards.items():
 > - Make sure you *renamed* the file to `credentials.json`
     - or change file name in code to match what it is
 
+### *google.auth.exceptions.RefreshError: (invalid_grant: Token has been expired or revoked)*
+> - Delete the `sheets_token.json` file, then try again
 
 ### Misc
 - [Troubleshoot authentication & authorization issues](https://developers.google.com/workspace/forms/api/troubleshoot-authentication-authorization)

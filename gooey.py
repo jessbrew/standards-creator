@@ -1,11 +1,34 @@
 import tkinter as tk
 from tkinter import ttk
 from datatype.standard import Standard
-import standardsInterface
+# import standardsInterface
 from collections import defaultdict
+import test_maker_interface
+
+SPREADSHEET_ID = "1EmozOHR-QQGPJ6bn7PnuTBzbWDqNUDW_KA9hFfXAwcE"
 
 def show_frame(frame):
     frame.tkraise()
+
+def pull_from_google(parent, spreadsheet_id):
+    grid_frame = tk.Frame(parent, padx=20, pady=20)
+    grid_frame.pack()
+
+    student_standards = test_maker_interface.get_all_student_standards(spreadsheet_id)
+    for row_num, (student, standards) in enumerate(student_standards.items()):
+        tk.Label( # student
+            grid_frame,
+            text=student,
+            width=10,
+            height=2
+        ).grid(row=row_num, column=0)
+        tk.Label( # standards
+            grid_frame,
+            text=standards,
+            width=10,
+            height=2
+        ).grid(row=row_num, column=1)
+
 
 root = tk.Tk()
 root.geometry("800x600")

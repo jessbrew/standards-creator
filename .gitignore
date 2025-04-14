@@ -181,4 +181,5 @@ cython_debug/
 credentials.json
 sheets_token.json
 
+# Database
 database/standards_creator.db

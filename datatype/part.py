@@ -1,19 +1,27 @@
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import declarative_base
+from sqlalchemy import String, Integer, ForeignKey
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+from question import Question
 
-base = declarative_base()
+class Base(DeclarativeBase):
+    pass
 
-class Part(base):
-    __tablename__ = "Part"
+class Part(Base):
+    __tablename__ = "parts"
 
-    partID = Column(Integer, primary_key=True, autoincrement=True)
-    questionID = Column(Integer)
-    content = Column(String)
+    partID: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    questionID: Mapped[int] = mapped_column(ForeignKey("questions.questionID"))
+    content: Mapped[str] = mapped_column(String)
 
-    def __init__(self, partID, questionID, content):
-        self.partID = partID
-        self.questionID = questionID
+    # Relationship to Question
+    question: Mapped[Question] = relationship(back_populates="parts")
+
+    def __init__(self, content: str, questionID: int):
         self.content = content
+        self.questionID = questionID
 
     def __repr__(self):
-        return f'<Part (partID="{self.partID}", questionID="{self.questionID}", content="{self.content}")>'
+        return (
+            f'<Part(partID="{self.partID}", '
+            f'questionID="{self.questionID}", '
+            f'content="{self.content}")>'
+        )
