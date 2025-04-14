@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 Base = declarative_base()
 
 from variable import Variable
-from standard import Standard, Part, Question
+from datatypes import Standard, Part, Question
 
 class Database:
     def __init__(self, db_url):
@@ -60,14 +60,14 @@ class Database:
         for question in standard.questions:
             standardQuestions.append(question)
             for part in question.parts:
-                questionParts.append((part.questionID, part.content))
+                questionParts.append(part.content)
         return(standard, standardQuestions, questionParts)
     
-    def create_whole_standard(self, standard, questions, parts, variables):
+    def add_standard(self, standard, questions, parts, variables):
         session = self.Session()
         self.add_standard(standard)
         session.flush()
-        for question in questions:
+        for question in questions:   
             self.add_question(question)
         for part in parts:
             self.add_part(part)
@@ -116,7 +116,7 @@ class Database:
 
 if __name__ == "__main__":
     # Create a database connection
-    db = Database("sqlite:///../database/standards_creator.db")
+    db = Database("sqlite:///standards_creator.db")
     db.connect()
     db.connection_check()
 

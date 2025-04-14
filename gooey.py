@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from datatype.standard import Standard
+from datatypes import Standard
 # import standardsInterface
 from collections import defaultdict
 import test_maker_interface

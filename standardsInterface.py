@@ -1,4 +1,4 @@
-from datatype.standard import Standard
+from datatypes import Standard
 # from datatype.database import Database
 
 
