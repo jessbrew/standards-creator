@@ -66,7 +66,7 @@ for s, values in sorted(orgStandards.items()):
         for v in values:
             tree.insert(parent, "end", text=f"Version: {v.standardID}")
     else:
-        single_standard = values[0]
+        single_standard = values[0] # no versions
         parent = tree.insert("", "end", text=f"{single_standard.name}: {s}")
 
 # ------------ Page 1 ------------
