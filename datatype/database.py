@@ -60,10 +60,10 @@ class Database:
         for question in standard.questions:
             standardQuestions.append(question)
             for part in question.parts:
-                questionParts.append((part.questionID, part.content))
+                questionParts.append(part.content)
         return(standard, standardQuestions, questionParts)
     
-    def create_whole_standard(self, standard, questions, parts, variables):
+    def add_standard(self, standard, questions, parts, variables):
         session = self.Session()
         self.add_standard(standard)
         session.flush()
