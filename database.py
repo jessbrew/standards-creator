@@ -4,7 +4,6 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 # Create the base class to map classes to database tables
 Base = declarative_base()
 
-from variable import Variable
 from datatypes import Standard, Part, Question
 
 class Database:
