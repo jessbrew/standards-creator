@@ -1,18 +1,33 @@
 from datatype.standard import Standard
-from collections import defaultdict
+# from datatype.database import Database
+
+
+# db = Database("sqlite:///standards_creator.db")
+# db.connect()
+#
+# standards = db.get_all_standards()
+# for s in standards:
+#     print(s.name)
+
 
 standards = []
-
-standards.append(Standard("Trig: ", 1, 0))
-standards.append(Standard("Geo: ", 2, 1))
-standards.append(Standard("Angles: ", 3, 2))  # version 1
-standards.append(Standard("Unit Circle: ", 3, 0))  # version 2
-standards.append(Standard("Vectors: ", 4, 0))
-standards.append(Standard("Cosines: ", 5, 0))  # version 1
-standards.append(Standard("Graphs: ", 5, 0))  # version 2
-standards.append(Standard("Triangles: ", 6, 0))  # version 1
-standards.append(Standard("Sines: ", 6, 0))  # version 2
-standards.append(Standard("Functions: ", 10, 0))    # standalone
+# id = version num
+# name == name
+# number = standard number
+standards.append(Standard(1, "Trig", 3,1))
+standards.append(Standard(2, "Trig", 3,1))
+standards.append(Standard(2, "Geo", 1,1))
+standards.append(Standard(1, "Angles", 2,1))
+standards.append(Standard(1, "Unit Circles", 4,1))
+standards.append(Standard(2, "Unit Circles", 4,1))
+standards.append(Standard(1, "Vectors", 5,1))
+standards.append(Standard(2, "Vectors", 5,1))
+standards.append(Standard(1, "Cosines", 6,1))
+standards.append(Standard(2, "Cosines", 6,1))
+standards.append(Standard(1, "Graphs", 7,1))
+standards.append(Standard(1, "Triangles", 8,1))
+standards.append(Standard(1, "Sines", 9,1))
+standards.append(Standard(1, "Functions", 10,1))
 
 def getAllStandards():
     return standards
