@@ -182,4 +182,4 @@ credentials.json
 sheets_token.json
 
 # Database
-database/standards_creator.db
+standards_creator.db
