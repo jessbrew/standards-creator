@@ -368,7 +368,35 @@ class Database:
             session.commit()
         session.close()
 
+    def make_standard(self, idNum):
+        session = self.Session()
+        standard = session.query(Standard).filter(Standard.standardID == idNum).first()
+        standardQuestions = []
+        questionParts = []
+        for question in standard.questions:
+            standardQuestions.append(question)
+            for part in question.parts:
+                questionParts.append(part.content)
+        return(standard, standardQuestions, questionParts)
 
+    def make_test(self, idNumList):
+        session = self.Session()
+        standards = []
+        for idNum in idNumList:
+            standard = self.create_standard(idNum)
+            standards.append(standard)
+        return standards
+
+    def print_test(self, test):
+        session = self.Session()
+        for test in test:
+            standard, standardQuestions, questionParts = test
+            print(standard.name)
+            for question in standardQuestions:
+                print(' ' + question.content)
+                for part in questionParts:
+                    print('     ' + part)
+            print('\n')
 
 
 
@@ -403,11 +431,10 @@ if __name__ == "__main__":
     # print("Parts:")
     # for part in parts:
     #     print(part.content)
+
     standard_one, standard_one_q, standard_one_p = db.create_standard(1)
     print(standard_one)
     print(standard_one_q)
     print(standard_one_p)
-
-
 
     db.disconnect()
