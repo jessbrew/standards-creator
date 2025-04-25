@@ -103,6 +103,7 @@ tk.Button(page1, text="+ Back to Main Page", command=lambda: show_frame(mainPage
 tk.Label(page2, text="New Standards Creation",font=('Arial', 40, 'bold')).pack(pady=20)
 tk.Button(page2, text="+ Back to Main Page", command=lambda: show_frame(mainPage),font=('Arial', 30, 'bold')).pack(pady=10)
 
+
 class Options:
     def __init__(self, root):
         self.root = root
