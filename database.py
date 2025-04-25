@@ -412,29 +412,4 @@ if __name__ == "__main__":
     db = Database("sqlite:///standards_creator.db")
     db.connect()
     db.connection_check()
-
-    # Fetch and print some sample data
-    # For Standards
-    # standards = db.get_all_standards()
-    # print("Standards:")
-    # for standard in standards:
-    #     print(standard.name)
-
-    # # For Questions
-    # questions = db.get_all_questions()
-    # print("Questions:")
-    # for question in questions:
-    #     print(question.content)
-
-    # # For Parts
-    # parts = db.get_all_parts()
-    # print("Parts:")
-    # for part in parts:
-    #     print(part.content)
-
-    standard_one, standard_one_q, standard_one_p = db.create_standard(1)
-    print(standard_one)
-    print(standard_one_q)
-    print(standard_one_p)
-
     db.disconnect()
