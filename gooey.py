@@ -65,8 +65,12 @@ generate_test.grid(row=2, column=0, padx=20, pady=5, sticky="w")
 tree_frame = tk.Frame(mainPage)
 tree_frame.grid(row=1, column=1, rowspan=4, padx=20, pady=10, sticky="nsew")
 
-tree = ttk.Treeview(tree_frame)
-tree.pack(expand=True) # setting the tree on the page
+tree = ttk.Treeview(tree_frame, height=20)
+tree.pack(expand=True, fill='both') # setting the tree on the page
+
+style = ttk.Style()
+style.configure("Treeview", font=("Arial", 14, "bold"), rowheight=25)  # increase row height
+style.configure("Treeview.Heading", font=("Arial", 14, "bold"))
 
 tree.column("#0", width=200)  # Main column
 tree.heading("#0", text="All Standards", anchor="w")
