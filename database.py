@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 # Create the base class to map classes to database tables
 Base = declarative_base()
 
-from variable import Variable
+# from variable import Variable
 from datatypes import Standard, Part, Question
 
 class Database:
@@ -122,10 +122,10 @@ if __name__ == "__main__":
 
     # Fetch and print some sample data
     # For Standards
-    # standards = db.get_all_standards()
-    # print("Standards:")
-    # for standard in standards:
-    #     print(standard.name)
+    standards = db.get_all_standards()
+    print("Standards:")
+    for standard in standards:
+        print(standard.name)
 
     # # For Questions
     # questions = db.get_all_questions()
@@ -138,11 +138,9 @@ if __name__ == "__main__":
     # print("Parts:")
     # for part in parts:
     #     print(part.content)
-    standard_one, standard_one_q, standard_one_p = db.create_standard(1)
-    print(standard_one)
-    print(standard_one_q)
-    print(standard_one_p)
-
-
+    # standard_one, standard_one_q, standard_one_p = db.create_standard(1)
+    # print(standard_one)
+    # print(standard_one_q)
+    # print(standard_one_p)
 
     db.disconnect()

@@ -2,12 +2,11 @@ import tkinter as tk
 from tkinter import ttk
 from datatypes import Standard
 import standardsInterface
-from collections import defaultdict
 import test_maker_interface
 
 SPREADSHEET_ID = "1EmozOHR-QQGPJ6bn7PnuTBzbWDqNUDW_KA9hFfXAwcE"
 
-def show_frame(frame):
+def show_frame(frame): # function used to display correct page
     frame.tkraise()
 
 def pull_from_google(parent, spreadsheet_id):
@@ -34,7 +33,7 @@ root = tk.Tk()
 root.geometry("800x600")
 root.title("User Story 4: Main Page")
 
-root.grid_rowconfigure(0, weight=1)
+root.grid_rowconfigure(0, weight=1) # both helps grid resizing
 root.grid_columnconfigure(0, weight=1)
 
 # Create frames (pages)
@@ -49,7 +48,7 @@ for frame in (mainPage, page1, page2):
 # ------------ Main Page -------------
 
 # Configure grid layout
-mainPage.columnconfigure(0, weight=1)
+mainPage.columnconfigure(0, weight=1) # both helps grid resizing
 mainPage.columnconfigure(1, weight=1)
 
 # Header
@@ -66,35 +65,36 @@ generate_test.grid(row=2, column=0, padx=20, pady=5, sticky="w")
 tree_frame = tk.Frame(mainPage)
 tree_frame.grid(row=1, column=1, rowspan=4, padx=20, pady=10, sticky="nsew")
 
-tree = ttk.Treeview(tree_frame)
-tree.pack(expand=True)
+tree = ttk.Treeview(tree_frame, height=20)
+tree.pack(expand=True, fill='both') # setting the tree on the page
+
+style = ttk.Style()
+style.configure("Treeview", font=("Arial", 14, "bold"), rowheight=25)  # increase row height
+style.configure("Treeview.Heading", font=("Arial", 14, "bold"))
 
 tree.column("#0", width=200)  # Main column
 tree.heading("#0", text="All Standards", anchor="w")
 
-standards = standardsInterface.getAllStandards()
-orgStandards = {}
+standards = standardsInterface.getAllStandards() # getting standards from database
+
+orgStandards = {} # dict to store standards and versions
 
 for s in standards:
     num = s.standardNumber
     if num not in orgStandards:
         orgStandards[num] = []
-        # print(num)
     orgStandards[s.standardNumber].append(s)
 
-for s, values in sorted(orgStandards.items()):
+for s, values in orgStandards.items(): # looping through dict and checking is values > 1; meaning the standard has more than 1 version
     if len(values) > 1:
         first_standard = values[0]
         parent = tree.insert("", "end", text=f"{first_standard.name}: {first_standard.standardNumber}")
 
-
-        for v in range(1, len(values) + 1):
-            print(values[v-1])
-            print(v)
+        for v in range(1, len(values) + 1): # helped to display the version number
             tree.insert(parent, "end", text=f" Version:{v}")
     else:
         single_standard = values[0] # no versions
-        parent = tree.insert("", "end", text=f"{single_standard.name}: {s}")
+        parent = tree.insert("", "end", text=f"{single_standard.name}: {single_standard.standardNumber}")
 
 # ------------ Page 1 ------------
 tk.Label(page1, text="Generate Test Page", font=('Arial', 40, 'bold')).pack(pady=20)
