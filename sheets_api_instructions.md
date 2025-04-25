@@ -10,7 +10,7 @@
     - \> `source venv/bin/activate` *[run in terminal]*
     - Should say *(venv)* before terminal entries now if it worked
 
-# Steps
+# Setup
 1. Make a Google form, and have the responses save to Google sheets
     - You need the ID if this sheet later, which is this part of the url:
         - ***docs.google.com/spreadsheets/d/***`1EmozOHR-QQGPJ6bn7PnuTBzbWDqNUDW_KA9hFfXAwcE`***/edit?resourcekey=&gid=952402027#gid=952402027***
@@ -19,9 +19,17 @@
 2. Follow these instructions to get Google Cloud & everything set up: [Python Sheets Quickstart](https://developers.google.com/workspace/sheets/api/quickstart/python)
     - You don't have to run their actual quickstart program, but do every other step since the setup for this program is the same
 
-3. Run the `test_maker_interface.py` file
+# Steps
+1. If the Google form, Google sheet, and Google Cloud project are already made, then first make sure you are added as a text user in the Google Cloud project
 
-# Example
+2. If you haven't already, download the `credentials.json` from the Google Cloud project by going to [Menu > Google Auth platform > Clients](https://console.cloud.google.com/auth/clients)
+    - Click the download button on the far right to download the OAuth Client
+    - Rename the file you downloaded to `credentials.json` and put it in the project folder 
+
+3. Make sure you installed `pip3 install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib` if you didn't already do it
+
+
+# Example Code
 [Example Form](https://docs.google.com/forms/d/e/1FAIpQLSd3cn5URTaTVjfcwmNPv-vDJNApgGQ7Zyb-XFFJhgGB7nOPRg/viewform?usp=header)
 
 [Example Sheet (of form responses)](https://docs.google.com/spreadsheets/d/1EmozOHR-QQGPJ6bn7PnuTBzbWDqNUDW_KA9hFfXAwcE/edit?usp=sharing)
@@ -37,6 +45,9 @@ for student, standards in student_standards.items():
 ```
 
 ## Troubleshooting
+
+### *google.auth.exceptions.RefreshError: (invalid_grant: Token has been expired or revoked)*
+> - Delete the `sheets_token.json` file, then try again
 
 ### *Access blocked: <project_name> has not completed the Google verification process*
 > - This may be because you didn't set your Google Console app to internal, but it doesn't let you set it to internal if you don't have a Google Workspace. If so, follow these steps:
@@ -55,9 +66,6 @@ for student, standards in student_standards.items():
 > - Make sure you put the .json file you downloaded earlier in your project folder
 > - Make sure you *renamed* the file to `credentials.json`
     - or change file name in code to match what it is
-
-### *google.auth.exceptions.RefreshError: (invalid_grant: Token has been expired or revoked)*
-> - Delete the `sheets_token.json` file, then try again
 
 ### Misc
 - [Troubleshoot authentication & authorization issues](https://developers.google.com/workspace/forms/api/troubleshoot-authentication-authorization)
