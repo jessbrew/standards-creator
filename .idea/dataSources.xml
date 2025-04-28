@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
     <data-source source="LOCAL" name="standards_creator" uuid="f50ce6fb-a606-4753-911a-c1800c05478f">
-      <driver-ref>sqlite.xerial</driver-ref>
+      <driver-ref>4a0984e6-2c01-4eac-b030-cbccd414ca93</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/database/standards_creator.db</jdbc-url>
