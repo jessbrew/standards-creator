@@ -33,7 +33,7 @@ class Database:
     ################################
     # CRUD Operations for Standard #
     ################################
-    
+
     def create_standard(self, name, number, courseID):
         session = self.Session()
         standard = Standard(name=name, number=number, courseID=courseID)
@@ -84,13 +84,12 @@ class Database:
         return(standard, standardQuestions, questionParts)
     
     def insert_standard(self, standard):
-        session = self.Session()
-        standardQuestions = standard.questions
+        self.create_standard(standard.name, standard.number, standard.courseID)
         for question in standard.questions:
-            self.create_question(question)
+            self.create_question(question.content, question.standardID)
             for part in question.parts:
-                self.create_part(part)
-        self.create_standard(standard)
+                self.create_part(part.content, part.questionID)
+        
 
     
     #################################
