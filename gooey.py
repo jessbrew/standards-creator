@@ -11,19 +11,19 @@ def show_frame(frame):
     frame.tkraise()
 
 
-def delete_student_standard(student_label, standards_label, delete_button, student_standards, student):    
+def delete_student_standard(student_label, standards_label, delete_button, student_standards_dict, student):    
     # destroy GUI labels
     student_label.destroy()
     standards_label.destroy()
     delete_button.destroy()
 
     # remove from dictionary
-    student_standards.pop(student)
+    student_standards_dict.pop(student)
 
-def pull_from_google(parent, spreadsheet_id):
-    student_standards = test_maker_interface.get_all_student_standards(spreadsheet_id)
-    for row_num, (student, standards) in enumerate(student_standards.items()):
-        student_label = tk.Label( # student
+
+def display_students_grid(parent, student_standards_dict):
+    for row_num, (student, standards) in enumerate(student_standards_dict.items()):
+        student_label = tk.Label( # Student
             parent,
             text=student,
             width=20,
@@ -32,7 +32,7 @@ def pull_from_google(parent, spreadsheet_id):
         )
         student_label.grid(row=row_num, column=0, padx=5, pady=5)
 
-        standard_label = tk.Label( # standards
+        standard_label = tk.Label( # Standards
             parent,
             text=standards,
             width=20,
@@ -41,6 +41,7 @@ def pull_from_google(parent, spreadsheet_id):
         )
         standard_label.grid(row=row_num, column=1, padx=5, pady=5)
 
+        # Delete button
         delete_button = tk.Button(
             parent,
             text="-",
@@ -49,13 +50,39 @@ def pull_from_google(parent, spreadsheet_id):
             bg="red",
             fg="white",
         )
-
-        # Attach command after the button exists
         delete_button.config(command=lambda stud_label=student_label, stand_label=standard_label, delete=delete_button,
-                                            standards_dict=student_standards, student_key=student:
+                                            standards_dict=student_standards_dict, student_key=student:
         delete_student_standard(stud_label, stand_label, delete, standards_dict, student_key))
 
         delete_button.grid(row=row_num, column=2, padx=5, pady=5)
+
+    # Add student button
+    tk.Button(parent, text="Add Student",
+            command=lambda: add_student(parent, student_standards_dict),
+            font=('Arial', 24)
+    ).grid(row=len(student_standards_dict)+1, column=1, padx=5, pady=5)
+
+def pull_from_google(parent, spreadsheet_id):
+    student_standards_dict = test_maker_interface.get_all_student_standards(spreadsheet_id)
+    display_students_grid(parent, student_standards_dict)
+
+
+
+def add_student(parent_grid, student_standards_dict):
+
+    student_name_label = tk.Label(input_section, text="Student Name:")
+    student_name_label.pack(side="left", padx=5)
+    student_name_entry = tk.Entry(input_section, width=20)
+    student_name_entry.pack(side="left", padx=5)
+
+    standards_label = tk.Label(input_section, text="Standards:")
+    standards_label.pack(side="left", padx=5)
+    standards_entry = tk.Entry(input_section, width=40)
+    standards_entry.pack(side="left", padx=5)
+    print("HERE")
+    print(student_standards_dict)
+
+
 
 
 
@@ -193,18 +220,3 @@ app = Options(page2)
 show_frame(mainPage)
 
 root.mainloop()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
