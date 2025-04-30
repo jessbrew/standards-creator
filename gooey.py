@@ -45,8 +45,6 @@ def display_students_grid(parent, student_standards_dict):
         )
         standard_label.grid(row=row_num, column=1, padx=5, pady=5)
 
-        print(standards)
-
         # Delete button
         delete_button = tk.Button(
             parent,

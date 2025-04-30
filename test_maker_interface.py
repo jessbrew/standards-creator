@@ -15,9 +15,9 @@ def add_student_standards(students_dictionary, student_name, standards):
     """
     # make sure 'standards' is a list, not a string
     if isinstance(standards, str):
-        # remove commas & spaces
-        standards = standards.replace(",", "")
+        # remove spaces, split at commas
         standards = standards.replace(" ", "")
+        standards = standards.split(",")
         # make standards into array of INTS
         int_standards = []
         for standard in standards:
