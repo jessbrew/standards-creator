@@ -22,6 +22,10 @@ def delete_student_standard(student_label, standards_label, delete_button, stude
 
 
 def display_students_grid(parent, student_standards_dict):
+    # clear grid
+    for widget in parent.winfo_children():
+        widget.destroy()
+
     for row_num, (student, standards) in enumerate(student_standards_dict.items()):
         student_label = tk.Label( # Student
             parent,
@@ -41,6 +45,8 @@ def display_students_grid(parent, student_standards_dict):
         )
         standard_label.grid(row=row_num, column=1, padx=5, pady=5)
 
+        print(standards)
+
         # Delete button
         delete_button = tk.Button(
             parent,
@@ -58,31 +64,29 @@ def display_students_grid(parent, student_standards_dict):
 
     # Add student button
     tk.Button(parent, text="Add Student",
-            command=lambda: add_student(parent, student_standards_dict),
-            font=('Arial', 24)
-    ).grid(row=len(student_standards_dict)+1, column=1, padx=5, pady=5)
+            command=lambda: add_student(parent, student_standards_dict)
+    ).grid(row=len(student_standards_dict)+2, column=0, padx=5, pady=5)
 
 def pull_from_google(parent, spreadsheet_id):
     student_standards_dict = test_maker_interface.get_all_student_standards(spreadsheet_id)
     display_students_grid(parent, student_standards_dict)
 
 
-
 def add_student(parent_grid, student_standards_dict):
+    student_name_entry = tk.Entry(parent_grid, width=20)
+    student_name_entry.grid(row=len(student_standards_dict)+1, column=0, padx=5, pady=5)
 
-    student_name_label = tk.Label(input_section, text="Student Name:")
-    student_name_label.pack(side="left", padx=5)
-    student_name_entry = tk.Entry(input_section, width=20)
-    student_name_entry.pack(side="left", padx=5)
+    standards_entry = tk.Entry(parent_grid, width=20)
+    standards_entry.grid(row=len(student_standards_dict)+1, column=1, padx=5, pady=5)
 
-    standards_label = tk.Label(input_section, text="Standards:")
-    standards_label.pack(side="left", padx=5)
-    standards_entry = tk.Entry(input_section, width=40)
-    standards_entry.pack(side="left", padx=5)
-    print("HERE")
-    print(student_standards_dict)
+    tk.Button(parent_grid, text="Done",
+        command=lambda: push_new_student(parent_grid, student_standards_dict, student_name_entry.get().strip(), standards_entry.get().strip())
+    ).grid(row=len(student_standards_dict)+2, column=1, padx=5, pady=5)
 
-
+def push_new_student(parent_grid, student_standards_dict, new_student, new_standards):
+    # Add student/standards to dictionary
+    test_maker_interface.add_student_standards(student_standards_dict, new_student, new_standards)
+    display_students_grid(parent_grid, student_standards_dict)
 
 
 
