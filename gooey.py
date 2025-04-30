@@ -124,6 +124,11 @@ class Options:
         self.entries_frame = ttk.Frame(self.main_frame)
         self.entries_frame.grid(row=2, column=0, sticky="w", pady=10)
 
+        self.text_widgets = []
+
+        self.submit_button = ttk.Button(self.entries_frame, text="Submit", command=self.submit)
+        self.submit_button.grid(row=0, column=0, sticky="w")
+
     def toggle_menu(self):
         if self.menu_visible:
             self.menu_frame.grid_forget()
@@ -133,24 +138,30 @@ class Options:
 
     def select_option(self, option):
         entry_frame = ttk.Frame(self.entries_frame)
-        entry_frame.pack(fill="x", pady=5)
+        entry_frame.grid(sticky="ew", pady=5)
 
         top_row = ttk.Frame(entry_frame)
-        top_row.pack(fill="x")
+        top_row.grid(sticky="ew")
 
         header_label = ttk.Label(top_row, text=option, font=("Arial", 20, "bold"))
-        header_label.pack(side="left", anchor="w")
+        header_label.grid(row=0, column=0, sticky="w")
 
         delete_button = ttk.Button(top_row, text="-", width=3, command=lambda: self.delete_option(entry_frame))
-        delete_button.pack(side="right")
+        delete_button.grid(row=0, column=1, sticky="e")
 
         text_box = tk.Text(entry_frame, height=5, width=40, wrap="word")
-        text_box.pack()
+        text_box.grid()
+
+        self.text_widgets.append(text_box)
 
         self.toggle_menu()
 
     def delete_option(self, frame):
         frame.destroy()
+
+    def submit(self):
+        for text_box in self.text_widgets:
+            user_input = text_box.get("1.0", "end-1c")
 
 app = Options(page2)
 
