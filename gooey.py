@@ -9,24 +9,82 @@ SPREADSHEET_ID = "1EmozOHR-QQGPJ6bn7PnuTBzbWDqNUDW_KA9hFfXAwcE"
 def show_frame(frame): # function used to display correct page
     frame.tkraise()
 
-def pull_from_google(parent, spreadsheet_id):
-    grid_frame = tk.Frame(parent, padx=20, pady=20)
-    grid_frame.pack()
 
-    student_standards = test_maker_interface.get_all_student_standards(spreadsheet_id)
-    for row_num, (student, standards) in enumerate(student_standards.items()):
-        tk.Label( # student
-            grid_frame,
+def delete_student_standard(student_label, standards_label, delete_button, student_standards_dict, student):    
+    # destroy GUI labels
+    student_label.destroy()
+    standards_label.destroy()
+    delete_button.destroy()
+
+    # remove from dictionary
+    student_standards_dict.pop(student)
+
+
+def display_students_grid(parent, student_standards_dict):
+    # clear grid
+    for widget in parent.winfo_children():
+        widget.destroy()
+
+    for row_num, (student, standards) in enumerate(student_standards_dict.items()):
+        student_label = tk.Label( # Student
+            parent,
             text=student,
-            width=10,
-            height=2
-        ).grid(row=row_num, column=0)
-        tk.Label( # standards
-            grid_frame,
+            width=20,
+            height=1,
+            bg="#c7c7c7",
+        )
+        student_label.grid(row=row_num, column=0, padx=5, pady=5)
+
+        standard_label = tk.Label( # Standards
+            parent,
             text=standards,
-            width=10,
-            height=2
-        ).grid(row=row_num, column=1)
+            width=20,
+            height=1,
+            bg="#c7c7c7",
+        )
+        standard_label.grid(row=row_num, column=1, padx=5, pady=5)
+
+        # Delete button
+        delete_button = tk.Button(
+            parent,
+            text="-",
+            width=1,
+            height=1,
+            bg="red",
+            fg="white",
+        )
+        delete_button.config(command=lambda stud_label=student_label, stand_label=standard_label, delete=delete_button,
+                                            standards_dict=student_standards_dict, student_key=student:
+        delete_student_standard(stud_label, stand_label, delete, standards_dict, student_key))
+
+        delete_button.grid(row=row_num, column=2, padx=5, pady=5)
+
+    # Add student button
+    tk.Button(parent, text="Add Student",
+            command=lambda: add_student(parent, student_standards_dict)
+    ).grid(row=len(student_standards_dict)+2, column=0, padx=5, pady=5)
+
+def pull_from_google(parent, spreadsheet_id):
+    student_standards_dict = test_maker_interface.get_all_student_standards(spreadsheet_id)
+    display_students_grid(parent, student_standards_dict)
+
+
+def add_student(parent_grid, student_standards_dict):
+    student_name_entry = tk.Entry(parent_grid, width=20)
+    student_name_entry.grid(row=len(student_standards_dict)+1, column=0, padx=5, pady=5)
+
+    standards_entry = tk.Entry(parent_grid, width=20)
+    standards_entry.grid(row=len(student_standards_dict)+1, column=1, padx=5, pady=5)
+
+    tk.Button(parent_grid, text="Done",
+        command=lambda: push_new_student(parent_grid, student_standards_dict, student_name_entry.get().strip(), standards_entry.get().strip())
+    ).grid(row=len(student_standards_dict)+2, column=1, padx=5, pady=5)
+
+def push_new_student(parent_grid, student_standards_dict, new_student, new_standards):
+    # Add student/standards to dictionary
+    test_maker_interface.add_student_standards(student_standards_dict, new_student, new_standards)
+    display_students_grid(parent_grid, student_standards_dict)
+
 
 
 root = tk.Tk()
@@ -99,6 +157,12 @@ for s, values in orgStandards.items(): # looping through dict and checking is va
 # ------------ Page 1 ------------
 tk.Label(page1, text="Generate Test Page", font=('Arial', 40, 'bold')).pack(pady=20)
 tk.Button(page1, text="+ Back to Main Page", command=lambda: show_frame(mainPage), font=('Arial', 30, 'bold')).pack(pady=10)
+
+# Pull students from Google
+tk.Button(page1, text="Pull Students from Google", command=lambda: pull_from_google(grid_frame, SPREADSHEET_ID), font=('Arial', 24)).pack(pady=20)
+grid_frame = tk.Frame(page1, padx=20, pady=20)
+grid_frame.pack()
+
 # ------------ Page 2 ------------
 tk.Label(page2, text="New Standards Creation",font=('Arial', 40, 'bold')).pack(pady=20)
 tk.Button(page2, text="+ Back to Main Page", command=lambda: show_frame(mainPage),font=('Arial', 30, 'bold')).pack(pady=10)
@@ -159,18 +223,3 @@ app = Options(page2)
 show_frame(mainPage)
 
 root.mainloop()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
